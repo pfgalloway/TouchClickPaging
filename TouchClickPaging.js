@@ -2,11 +2,15 @@
 
 	var constMothershipDivID	= "TCPpages" ;
 	var constPageNumAttribute	= "data-TCPpageNum" ;
+	var constPageTitleAttribute	= "data-TCPtitle" ;
+	
 
 	
 // global variables
 
 	var	TCPpages		= new Array() ;
+	var TCPpageTitles	= new Array() ;
+	
 	var TCPcurrentPage	= 1 ;
 	var TCPpageWidth	= 0 ;
 
@@ -54,9 +58,18 @@ function TCPfindPages() {
 			if (someAttributes != null) {
 				
 				if (currentChild.hasAttribute(constPageNumAttribute) ) {
-					var pageNumber			= parseInt(currentChild.getAttribute(constPageNumAttribute)) ;
+					var pageNumber				= parseInt(currentChild.getAttribute(constPageNumAttribute)) ;
 					
-					TCPpages[pageNumber]	= currentChild ;
+					TCPpages[pageNumber]		= currentChild ;
+					
+					
+					TCPpageTitles[pageNumber]	= "" ;
+					
+					if (currentChild.hasAttribute(constPageTitleAttribute) ) {
+						var pageTitle		= currentChild.getAttribute(constPageTitleAttribute) ;
+						
+						TCPpageTitles[pageNumber]	= pageTitle ;	
+					}
 				}
 			}
 		}
@@ -78,8 +91,14 @@ function TCPinitialisePageIndicators() {
 	for (var i=1; i < TCPpages.length; i++) {
 	
 		indicatorHTML	+= '<span '+ constPageNumAttribute + '="' + i + '" class="TCPindicator" ' ;
-		indicatorHTML	+= 'onclick="TCPpageIndicatorSelected(this);">&#9679;</span>' ;	
+		indicatorHTML	+= 'onclick="TCPpageIndicatorSelected(this);">' ;
+		
+		indicatorHTML	+=	'&#9679;' ;
 
+		if (TCPpageTitles[i] != "")
+			indicatorHTML	+= '<span>' + TCPpageTitles[i] + '</span>' ;
+		
+		indicatorHTML	+=	'</span>' ;	
 	}
 	
 	TCPindicator.innerHTML	= indicatorHTML ;
@@ -164,6 +183,23 @@ function TCPinstallCustomCSS() {
 	TCPstyle	+= '		padding: 	0.5em;'						+ EOL ;
 	TCPstyle	+= '		cursor: 	pointer;'					+ EOL ;
 	TCPstyle	+= '	}' 											+ EOL ;
+
+	TCPstyle	+= '	span.TCPindicator span {'					+ EOL ;
+	TCPstyle	+= '		position: 	absolute;'					+ EOL ;
+	TCPstyle	+= ''												+ EOL ;
+	TCPstyle	+= '		font-size:	0.5em ;'					+ EOL ;
+	TCPstyle	+= ''												+ EOL ;
+	TCPstyle	+= '		top: 		-.5em;'						+ EOL ;
+	TCPstyle	+= '		margin-left:-1.5em;'					+ EOL ;
+	TCPstyle	+= ''												+ EOL ;
+	TCPstyle	+= '		opacity:	0 ;'						+ EOL ;
+	TCPstyle	+= '	}' 											+ EOL ;
+
+	TCPstyle	+= '	span.TCPindicator:hover span {'				+ EOL ;
+	TCPstyle	+= ''												+ EOL ;
+	TCPstyle	+= '		opacity:	0.5 ;'						+ EOL ;
+	TCPstyle	+= '	}' 											+ EOL ;
+
 	TCPstyle	+= '</style>' 										+ EOL ;
 	
 	// insert dynamic CSS into page header
