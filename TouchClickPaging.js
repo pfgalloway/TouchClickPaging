@@ -103,9 +103,9 @@ function TCPinitialisePages() {
 
 function TCPinstallCustomCSS() {
 
-	var TCPstyle	= '' ;
+	var EOL			= '\n' ;
 	
-	var EOL		= '\n' ;
+	var TCPstyle	= '' ;
 	
 	TCPstyle	+= '<!-- Dynamic CSS for TouchControlPaging -->' 	+ EOL ;
 	TCPstyle	+= '<style type="text/css">' 						+ EOL ;
@@ -113,6 +113,7 @@ function TCPinstallCustomCSS() {
 	TCPstyle	+= '		overflow: hidden; '			 			+ EOL ;
 	TCPstyle	+= '	}' 											+ EOL ;
 	TCPstyle	+= ''												+ EOL ;
+
 	TCPstyle	+= '	div.TCPpage {'	 							+ EOL ;
 	TCPstyle	+= '		position: 	absolute;'					+ EOL ;
 	TCPstyle	+= ''												+ EOL ;
@@ -122,7 +123,14 @@ function TCPinstallCustomCSS() {
 	TCPstyle	+= ''												+ EOL ;
 	TCPstyle	+= '		right: 		auto;'						+ EOL ;
 	TCPstyle	+= '		width: 	' + TCPpageWidth + 'px;'		+ EOL ;
+	TCPstyle	+= ''												+ EOL ;
+							// transition animation
+	TCPstyle	+= '		-webkit-transition-property: 	left ;'	+ EOL ;
+	TCPstyle	+= '		-webkit-transition-duration: 	0.5s ;'	+ EOL ;
+	TCPstyle	+= '		-moz-transition-property: 		left ;'	+ EOL ;
+	TCPstyle	+= '		-moz-transition-duration: 		0.5s ;'	+ EOL ;
 	TCPstyle	+= '	}' 											+ EOL ;
+
 	TCPstyle	+= ''												+ EOL ;
 	TCPstyle	+= '	div.TCPonscreen {'							+ EOL ;
 	TCPstyle	+= '		left:		0px ;'						+ EOL ;
@@ -136,6 +144,7 @@ function TCPinstallCustomCSS() {
 	TCPstyle	+= '		left:	' +TCPpageWidth + 'px;'			+ EOL ;
 	TCPstyle	+= '	}' 											+ EOL ;
 	TCPstyle	+= ''												+ EOL ;
+
 	TCPstyle	+= '	span.TCPindicator {'						+ EOL ;
 	TCPstyle	+= '		padding: 	5px;'						+ EOL ;
 	TCPstyle	+= '		cursor: 	pointer;'					+ EOL ;
