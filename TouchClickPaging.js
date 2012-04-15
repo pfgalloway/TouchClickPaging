@@ -20,8 +20,6 @@
 
 function TCPinitialisation() {
 
-	console.log("initialisation") ;
-	
 	TCPfindPages() ;
 	
 	TCPinitialisePageIndicators() ;
@@ -57,7 +55,6 @@ function TCPfindPages() {
 				if (currentChild.hasAttribute(constPageNumAttribute) ) {
 					var pageNumber			= parseInt(currentChild.getAttribute(constPageNumAttribute)) ;
 					
-					console.log ("found page: " + pageNumber ) ;
 					TCPpages[pageNumber]	= currentChild ;
 				}
 			}
@@ -93,8 +90,6 @@ function TCPinitialisePages() {
 
 	for (var i=1; i < TCPpages.length; i++) {
 	
-		console.log ("looking at page " + i + " of total " + (TCPpages.length - 1) ) ;
-		
 		// add basic style
 		var currentPage	= TCPpages[i] ;
 		
@@ -111,6 +106,7 @@ function TCPinitialisePages() {
 		TCP_addAttribute(currentPage, "onmousedown",	"TCPpagemouseBegan(event, this)") ;
 		TCP_addAttribute(currentPage, "onmousemove", 	"TCPpagemouseMove(event, this)") ;
 		TCP_addAttribute(currentPage, "onmouseup", 		"TCPpagemouseEnd(event, this)") ;
+		TCP_addAttribute(currentPage, "onmouseout", 		"TCPpagemouseEnd(event, this)") ;
 				
 		TCP_addAttribute(currentPage, "ontouchstart",	"TCPpagetouchBegan(event, this)") ;
 		TCP_addAttribute(currentPage, "ontouchmove", 	"TCPpagetouchMove(event, this)") ;
@@ -182,14 +178,9 @@ function TCPinstallCustomCSS() {
 
 function TCPpageIndicatorSelected(pageIndicator) {
 
-	console.log("page indicator selected " + constPageNumAttribute) ;
-	
 	if (pageIndicator.hasAttribute(constPageNumAttribute) ) {
-		console.log("found attribute") ;
 		
 		newPage	= pageIndicator.getAttribute("data-TCPpageNum") ;
-
-		console.log("page indicator selected " + newPage) ;
 
 		if (newPage != TCPcurrentPage) {
 		
@@ -197,9 +188,7 @@ function TCPpageIndicatorSelected(pageIndicator) {
 			
 			TCPupdateDisplay() ;
 		}
-	} else {
-		console.log("indicator doesn't have " + constPageNumAttribute) ;
-	}
+	} 
 }
 
 
@@ -209,23 +198,19 @@ function TCPupdateDisplay() {
 	
 		// add basic style
 		var currentPage	= TCPpages[i] ;
-		console.log("------------------------------------") ;
 	
 		if (i < TCPcurrentPage) {
-			console.log("making sure page " + i + " is left") ;
 			TCP_removeFromClass(currentPage, "TCPoffscreenRight") ;
 			TCP_removeFromClass(currentPage, "TCPonscreen") ;
 			TCP_addToClass(currentPage, "TCPoffscreenLeft") ;
 		
 		} else {
 			if (i == TCPcurrentPage) {
-				console.log("making sure page " + i + " is onscreen") ;
 				TCP_removeFromClass(currentPage, "TCPoffscreenRight") ;
 				TCP_removeFromClass(currentPage, "TCPoffscreenLeft") ;
 				TCP_addToClass(currentPage, "TCPonscreen") ;
 
 			} else {
-				console.log("making sure page " + i + " is right") ;
 				TCP_removeFromClass(currentPage, "TCPoffscreenLeft") ;
 				TCP_removeFromClass(currentPage, "TCPonscreen") ;
 				TCP_addToClass(currentPage, "TCPoffscreenRight") ;
@@ -239,8 +224,6 @@ function TCPupdateDisplay() {
 
 function TCPpagemouseBegan(event, mousedPage) {
 
-	mousedPage.innerHTML		= "moused!" ;
-
     TCPtouchStartX				= event.clientX ;
     TCPtouchLastX				= TCPtouchStartX ;
 
@@ -249,8 +232,6 @@ function TCPpagemouseBegan(event, mousedPage) {
 
 function TCPpagetouchBegan(event, touchedPage) {
 
-	touchedPage.innerHTML		= "touched!" ;
-	
     TCPtouchStartX				= event.touches[0].clientX ;
     TCPtouchLastX				= TCPtouchStartX ;
 
@@ -278,7 +259,7 @@ function TCPpageActBegan(event, activePage) {
     	TCPremoveCSStransition(TCPpageLeft) ;
     }
     
-    if (pageRightNumber < (TCPpages.length - 1) ) {
+    if (pageRightNumber < (TCPpages.length ) ) {
     	TCPpageRight	= TCPpages[pageRightNumber] ;
     	TCPremoveCSStransition(TCPpageRight) ;
     }
@@ -324,8 +305,6 @@ function TCPpageActMove (event, activePage) {
     activePage.style.left	= newLeft+'px' ;
     
 
-	activePage.innerHTML		="moved!" + bigDelta ;
-	
     if (TCPpageLeft != undefined) {
     	var thisLeft = newLeft - TCPpageWidth ;
     	TCPpageLeft.style.left	= thisLeft + 'px' ;
@@ -356,13 +335,11 @@ function TCPpageActEnd (event, activePage) {
 
 	TCPcurrentlySlidingPage	= false ;
 	
-	activePage.innerHTML		="ended!" ;
-
     var slideDirection 	= "revert" ;
     
     var endLeft			= 0 ;
 
-    var pageNumber		= parseInt(touchedPage.getAttribute(constPageNumAttribute)) ;
+    var pageNumber		= parseInt(activePage.getAttribute(constPageNumAttribute)) ;
     var newPageNumber	= pageNumber ;
     
     var currentTouch	= TCPtouchLastX ;
@@ -384,7 +361,7 @@ function TCPpageActEnd (event, activePage) {
     if (endLeft < TCPpageStartLeft-(TCPpageWidth / 2)) {
     	slideDirection	= "left" ;
     	
-    	if (pageNumber < allFlickPages.length)
+    	if (pageNumber < TCPpages.length - 1)
     		TCPcurrentPage	= pageNumber + 1 ;
     	else
     		slideDirection	= "revert" ;

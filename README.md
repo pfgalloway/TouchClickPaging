@@ -25,7 +25,5 @@ returns total number of pages in the scroll.
 
 
 ##to do##
-- add touch 
 - put hover text on indicator
 - mark selected page indicator differently
-- put in arrows
