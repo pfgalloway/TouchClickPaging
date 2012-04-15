@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+	<title>TouchClickPaging Sample</title>
+	
+	<script type='text/javascript' src="TouchClickPaging.js"></script>
+	
+	<meta name="viewport" content="width=device-width, height=480, initial-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	
+	<style type="text/css">
+	
+		div.mainBody {
+			position: absolute ;
+
+			top: 	20% ;
+			bottom: 20% ;
+			height: auto ;
+			
+			left: 	20% ;
+			right: 	20% ;
+			width:	auto ;
+			
+			background-color: green ;
+		}
+		
+		div#TCPindicators {
+		
+		}
+	</style>
+</head>
+
+<!-- you must call TCPinitialisation on page load, either here or as part of own initialisation routine -->
+<body onload="TCPinitialisation()">
+
+The main body
+
+	<!-- the enclosing div **must** have id="TCPpages", you can apply CSS to that ID or use your own class -->
+	<!-- also note that TCP uses 'style=' dynamically.  Don't use this attribute, it will get overwritten -->
+	
+	
+	<div 	id				= "TCPpages" 
+			class			="mainBody" >
+			
+		This is the main page
+
+		<!-- any 'pages' must have attribute data-TCPpageNumer="x" -->
+		<!-- any style position attributes (position, top, bottom, left, right, height, width) will be overwritten -->
+		
+		<div 	data-TCPpageNum	= "1"
+				style	= "background-color: red ;">
+		Page 1
+		</div>
+		
+		<div 	data-TCPpageNum	= "2"
+				style	= "background-color: green ;">
+		Page 2
+		</div>
+
+		<div 	data-TCPpageNum	= "3"
+				style	= "background-color: blue ;">
+		Page 3
+		</div>
+
+		<div 	data-TCPpageNum	= "4"
+				style	= "background-color: yellow ;">
+		Page 4
+		</div>
+	</div>
+	
+	<div style="position: absolute; display: block; bottom: 5px; left: 0px; right: 0px; width: 100%; text-align: center">
+	<!-- data-TCPstart 		= starting page; if ommitted, default is 1 -->
+	<div 	id				= "TCPindicators"
+			data-TCPstart	= "3"></div>
+	</div>
+</body>
