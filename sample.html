@@ -27,11 +27,25 @@
 		div#TCPindicators {
 		
 		}
+		
+		.paperRed {
+			background-color: red ;
+		}
+		
+		.paperGreen {
+			background-color: green ;
+		}
+		.paperBlue {
+			background-color: blue;
+		}
+		.paperYellow {
+			background-color: yellow ;
+		}
 	</style>
 </head>
 
 <!-- you must call TCPinitialisation on page load, either here or as part of own initialisation routine -->
-<body onload="TCPinitialisation()">
+<body onload="TCPinitialisation()" ontouchmove="noMove(event)">
 
 The main body
 
@@ -46,24 +60,29 @@ The main body
 
 		<!-- any 'pages' must have attribute data-TCPpageNumer="x" -->
 		<!-- any style position attributes (position, top, bottom, left, right, height, width) will be overwritten -->
-		
+		<!-- don't use style attribute within div either -->
+				
 		<div 	data-TCPpageNum	= "1"
-				style	= "background-color: red ;">
+				class	= "paperRed"
+				>
 		Page 1
 		</div>
 		
 		<div 	data-TCPpageNum	= "2"
-				style	= "background-color: green ;">
+				class	= "paperGreen"
+				>
 		Page 2
 		</div>
 
 		<div 	data-TCPpageNum	= "3"
-				style	= "background-color: blue ;">
+				class	= "paperBlue"
+				>
 		Page 3
 		</div>
 
 		<div 	data-TCPpageNum	= "4"
-				style	= "background-color: yellow ;">
+				class	= "paperYellow"
+				>
 		Page 4
 		</div>
 	</div>
