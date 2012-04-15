@@ -9,6 +9,7 @@
 // global variables
 
 	var	TCPpages		= new Array() ;
+	var TCPindicators	= new Array() ;
 	var TCPpageTitles	= new Array() ;
 	
 	var TCPcurrentPage	= 1 ;
@@ -19,6 +20,8 @@
     
     var	TCPpageLeft		= undefined ;
 	var TCPpageRight	= undefined ;
+	
+	var TCPpageStartLeft	= 0 ;
 	
 	var TCPcurrentlySlidingPage	= false ;
 
@@ -32,6 +35,8 @@ function TCPinitialisation() {
 	TCPinitialisePages() ;
 
 	TCPinstallCustomCSS() ;	
+	
+	TCPupdateDisplay() ;
 }
 
 
@@ -81,7 +86,6 @@ function TCPfindPages() {
 function TCPinitialisePageIndicators() {
 
 	var TCPindicator	= document.getElementById("TCPindicators") ;
-	var indicatorHTML	= "" ;
 	
 	// check if a start page is indicated
 	if (TCPindicator.hasAttribute("data-TCPstart") )
@@ -90,7 +94,11 @@ function TCPinitialisePageIndicators() {
 	// insert indicators
 	for (var i=1; i < TCPpages.length; i++) {
 	
-		indicatorHTML	+= '<span '+ constPageNumAttribute + '="' + i + '" class="TCPindicator" ' ;
+		var indicatorHTML	= "" ;
+		var indicatorID		= "TCPindicatorID"+i ;
+	
+		indicatorHTML	+= '<span id="' + indicatorID + '" ';
+		indicatorHTML	+= constPageNumAttribute + '="' + i + '" class="TCPindicator" ' ;
 		indicatorHTML	+= 'onclick="TCPpageIndicatorSelected(this);">' ;
 		
 		indicatorHTML	+=	'&#9679;' ;
@@ -98,10 +106,19 @@ function TCPinitialisePageIndicators() {
 		if (TCPpageTitles[i] != "")
 			indicatorHTML	+= '<span>' + TCPpageTitles[i] + '</span>' ;
 		
-		indicatorHTML	+=	'</span>' ;	
+		indicatorHTML	+=	'</span>' ;
+		
+		TCPindicator.innerHTML	+= indicatorHTML ;
+
 	}
 	
-	TCPindicator.innerHTML	= indicatorHTML ;
+	for (var i=1; i < TCPpages.length; i++) {
+		// for some reason I couldn't grab the element while in the above loop
+
+		var indicatorID		= "TCPindicatorID"+i ;
+
+		TCPindicators[i]	= document.getElementById(indicatorID) ;
+	}
 }
 
 
@@ -184,6 +201,10 @@ function TCPinstallCustomCSS() {
 	TCPstyle	+= '		cursor: 	pointer;'					+ EOL ;
 	TCPstyle	+= '	}' 											+ EOL ;
 
+	TCPstyle	+= '	span.TCPindicator.TCPcurrentPage {'			+ EOL ;
+	TCPstyle	+= '		color: 		white;'						+ EOL ;
+	TCPstyle	+= '	}' 											+ EOL ;
+
 	TCPstyle	+= '	span.TCPindicator span {'					+ EOL ;
 	TCPstyle	+= '		position: 	absolute;'					+ EOL ;
 	TCPstyle	+= ''												+ EOL ;
@@ -234,23 +255,30 @@ function TCPupdateDisplay() {
 	for (var i=1; i < TCPpages.length; i++) {
 	
 		// add basic style
-		var currentPage	= TCPpages[i] ;
-	
+		var currentPage			= TCPpages[i] ;
+		var currentIndicator	= TCPindicators[i] ;
+
 		if (i < TCPcurrentPage) {
 			TCP_removeFromClass(currentPage, "TCPoffscreenRight") ;
 			TCP_removeFromClass(currentPage, "TCPonscreen") ;
 			TCP_addToClass(currentPage, "TCPoffscreenLeft") ;
+			
+			TCP_removeFromClass(currentIndicator, "TCPcurrentPage") ;
 		
 		} else {
 			if (i == TCPcurrentPage) {
 				TCP_removeFromClass(currentPage, "TCPoffscreenRight") ;
 				TCP_removeFromClass(currentPage, "TCPoffscreenLeft") ;
 				TCP_addToClass(currentPage, "TCPonscreen") ;
+				
+				TCP_addToClass(currentIndicator, "TCPcurrentPage") ;
 
 			} else {
 				TCP_removeFromClass(currentPage, "TCPoffscreenLeft") ;
 				TCP_removeFromClass(currentPage, "TCPonscreen") ;
 				TCP_addToClass(currentPage, "TCPoffscreenRight") ;
+
+				TCP_removeFromClass(currentIndicator, "TCPcurrentPage") ;
 			}
 		}
 	}
