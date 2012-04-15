@@ -2,88 +2,57 @@
 <head>
 	<title>TouchClickPaging Sample</title>
 	
+	<link rel="stylesheet" href="TouchClickPaging_sample.css">
 	<script type='text/javascript' src="TouchClickPaging.js"></script>
 	
 	<meta name="viewport" content="width=device-width, height=480, initial-scale=1.0, user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	
-	<style type="text/css">
-	
-		div.mainBody {
-			position: absolute ;
-
-			top: 	20% ;
-			bottom: 20% ;
-			height: auto ;
-			
-			left: 	20% ;
-			right: 	20% ;
-			width:	auto ;
-			
-			background-color: gray ;
-		}
-		
-		div#TCPindicators {
-		
-		}
-		
-		.paperRed {
-			background-color: red ;
-		}
-		
-		.paperGreen {
-			background-color: green ;
-		}
-		.paperBlue {
-			background-color: blue;
-		}
-		.paperYellow {
-			background-color: yellow ;
-		}
-	</style>
 </head>
 
 <!-- you must call TCPinitialisation on page load, either here or as part of own initialisation routine -->
 <body onload="TCPinitialisation()" ontouchmove="noMove(event)">
 
-The main body
+<div id="fullScreen" class="glowNoise">
+
+<span class="ghostText">The main body</span>
 
 	<!-- the enclosing div **must** have id="TCPpages", you can apply CSS to that ID or use your own class -->
 	<!-- also note that TCP uses 'style=' dynamically.  Don't use this attribute, it will get overwritten -->
 	
 	
 	<div 	id				= "TCPpages" 
-			class			="mainBody" >
+			class			="scrollView" >
 			
-		This is the main page
+		<span class="ghostText">This is the wallpaper</span>
 
 		<!-- any 'pages' must have attribute data-TCPpageNumer="x" -->
 		<!-- any style position attributes (position, top, bottom, left, right, height, width) will be overwritten -->
 		<!-- don't use style attribute within div either -->
 				
 		<div 	data-TCPpageNum	= "1"
-				class	= "paperRed"
+				class	= "demoPage colourRed texturePaper"
 				>
-		Page 1
+		<span class="ghostText">Page 1</span>
 		</div>
 		
 		<div 	data-TCPpageNum	= "2"
-				class	= "paperGreen"
+				class	= "demoPage colourGreen texturePaper"
 				>
-		Page 2
+		<span class="ghostText">Page 2</span>
 		</div>
 
 		<div 	data-TCPpageNum	= "3"
-				class	= "paperBlue"
+				class	= "demoPage colourBlue texturePaper"
 				>
-		Page 3
+		<span class="ghostText">Page 3</span>
 		</div>
 
 		<div 	data-TCPpageNum	= "4"
-				class	= "paperYellow"
+				class	= "demoPage colourYellow texturePaper"
 				>
-		Page 4
+		<span class="ghostText">Page 4</span>
 		</div>
 	</div>
 	
@@ -92,4 +61,5 @@ The main body
 	<div 	id				= "TCPindicators"
 			data-TCPstart	= "3"></div>
 	</div>
+</div>
 </body>

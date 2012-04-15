@@ -2,6 +2,7 @@
 
 	var constMothershipDivID	= "TCPpages" ;
 	var constPageNumAttribute	= "data-TCPpageNum" ;
+
 	
 // global variables
 
@@ -160,7 +161,7 @@ function TCPinstallCustomCSS() {
 	TCPstyle	+= ''												+ EOL ;
 
 	TCPstyle	+= '	span.TCPindicator {'						+ EOL ;
-	TCPstyle	+= '		padding: 	5px;'						+ EOL ;
+	TCPstyle	+= '		padding: 	0.5em;'						+ EOL ;
 	TCPstyle	+= '		cursor: 	pointer;'					+ EOL ;
 	TCPstyle	+= '	}' 											+ EOL ;
 	TCPstyle	+= '</style>' 										+ EOL ;
