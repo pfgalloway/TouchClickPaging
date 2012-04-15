@@ -13,17 +13,22 @@ function TCPinitialisation() {
 
 	console.log("initialisation") ;
 	
-	findTCPpages() ;
+	TCPfindPages() ;
 	
-	initialiseTCPpageIndicators() ;
+	TCPinitialisePageIndicators() ;
 	
-	initialiseTCPpages() ;
+	TCPinitialisePages() ;
 
-	installCustomCSS() ;	
+	TCPinstallCustomCSS() ;	
 }
 
 
-function findTCPpages() {
+
+//
+// Initialisation routines
+//
+
+function TCPfindPages() {
 
 	var umbrellaDiv		= document.getElementById(umbrellaDivId) ;
 	
@@ -53,7 +58,7 @@ function findTCPpages() {
 
 
 
-function initialiseTCPpageIndicators() {
+function TCPinitialisePageIndicators() {
 
 	var TCPindicator	= document.getElementById("TCPindicators") ;
 	var indicatorHTML	= "" ;
@@ -65,7 +70,8 @@ function initialiseTCPpageIndicators() {
 	// insert indicators
 	for (var i=1; i < TCPpages.length; i++) {
 	
-		indicatorHTML	+= '<span class="TCPindicator">&#9679;</span>' ;	
+		indicatorHTML	+= '<span data-pageNum="' + i + '" class="TCPindicator" ' ;
+		indicatorHTML	+= 'onclick="TCPpageIndicatorSelected(this);">&#9679;</span>' ;	
 	}
 	
 	TCPindicator.innerHTML	= indicatorHTML ;
@@ -73,7 +79,7 @@ function initialiseTCPpageIndicators() {
 
 
 
-function initialiseTCPpages() {
+function TCPinitialisePages() {
 
 	for (var i=1; i < TCPpages.length; i++) {
 	
@@ -82,20 +88,20 @@ function initialiseTCPpages() {
 		// add basic style
 		var currentPage	= TCPpages[i] ;
 		
-		_addToClass(currentPage, "TCPpage") ;
+		TCP_addToClass(currentPage, "TCPpage") ;
 		
 		if (i < TCPcurrentPage) 
-			_addToClass(currentPage, "TCPoffscreenLeft") ;
+			TCP_addToClass(currentPage, "TCPoffscreenLeft") ;
 		
 		else if (i == TCPcurrentPage)
-				_addToClass(currentPage, "TCPonscreen") ;
+				TCP_addToClass(currentPage, "TCPonscreen") ;
 			else
-				_addToClass(currentPage, "TCPoffscreenRight") ;
+				TCP_addToClass(currentPage, "TCPoffscreenRight") ;
 	}
 }
 
 
-function installCustomCSS() {
+function TCPinstallCustomCSS() {
 
 	var TCPstyle	= '' ;
 	
@@ -132,6 +138,7 @@ function installCustomCSS() {
 	TCPstyle	+= ''												+ EOL ;
 	TCPstyle	+= '	span.TCPindicator {'						+ EOL ;
 	TCPstyle	+= '		padding: 	5px;'						+ EOL ;
+	TCPstyle	+= '		cursor: 	pointer;'					+ EOL ;
 	TCPstyle	+= '	}' 											+ EOL ;
 	TCPstyle	+= '</style>' 										+ EOL ;
 	
@@ -144,22 +151,81 @@ function installCustomCSS() {
 
 
 
-function _addToClass (anElement, classValue) {
+//
+// operational routines
+//
 
-	console.log ("looking at element which is " + typeof(anElement) ) ;
+function TCPpageIndicatorSelected(pageIndicator) {
+
+	if (pageIndicator.hasAttribute("data-pageNum") ) {
+		newPage	= pageIndicator.getAttribute("data-pageNum") ;
+
+		console.log("page indicator selected " + newPage) ;
+
+		if (newPage != TCPcurrentPage) {
+		
+			TCPcurrentPage	= newPage ;
+			
+			TCPupdateDisplay() ;
+		}
+	}
+}
+
+
+function TCPupdateDisplay() {
+
+	for (var i=1; i < TCPpages.length; i++) {
 	
+		// add basic style
+		var currentPage	= TCPpages[i] ;
+		console.log("------------------------------------") ;
+	
+		if (i < TCPcurrentPage) {
+			console.log("making sure page " + i + " is left") ;
+			TCP_removeFromClass(currentPage, "TCPoffscreenRight") ;
+			TCP_removeFromClass(currentPage, "TCPonscreen") ;
+			TCP_addToClass(currentPage, "TCPoffscreenLeft") ;
+		
+		} else {
+			if (i == TCPcurrentPage) {
+				console.log("making sure page " + i + " is onscreen") ;
+				TCP_removeFromClass(currentPage, "TCPoffscreenRight") ;
+				TCP_removeFromClass(currentPage, "TCPoffscreenLeft") ;
+				TCP_addToClass(currentPage, "TCPonscreen") ;
+
+			} else {
+				console.log("making sure page " + i + " is right") ;
+				TCP_removeFromClass(currentPage, "TCPoffscreenLeft") ;
+				TCP_removeFromClass(currentPage, "TCPonscreen") ;
+				TCP_addToClass(currentPage, "TCPoffscreenRight") ;
+			}
+		}
+	}
+}
+
+
+
+
+//
+// support functions
+//
+
+function TCP_addToClass (anElement, classValue) {
 
 	var currentClass	= "" ;
+	var newClass		= "" ;
 	
 	if (anElement.hasAttribute("class") ) 
 		currentClass	= anElement.getAttribute("class") ;
-					
+		
     if (currentClass.search(classValue) < 0)  // new value not already present
     	newClass		= currentClass.concat(" " + classValue + " ") ;
+    else
+    	newClass		= currentClass ;
 
-    // strip out double+ spaces
+    // strip out double+ spaces that may have snuck in
     newClass		= newClass.replace (/\s{2,}/, " ") ;
-    
+
 	if (window.XMLHttpRequest) 	// code for IE7+, Firefox, Chrome, Opera, Safari
 	    anElement.setAttribute("class", newClass) ;
 			
@@ -167,12 +233,17 @@ function _addToClass (anElement, classValue) {
 	    anElement.setAttribute('className', newClass) ;
 }
 
-function _removeFromClass (anElement, classValue) {
-    var currentClass	= anElement.getAttributeNode("class").value ;
+
+
+function TCP_removeFromClass (anElement, classValue) {
+
+
+    var currentClass	= anElement.getAttribute("class") ;
 
     var newClass		= currentClass.replace(classValue, " ") ;
-    newClass		= newClass.replace (/\s{2,}/, " ") ;
     
+    newClass			= newClass.replace (/\s{2,}/, " ") ;
+
 	if (window.XMLHttpRequest) 	// code for IE7+, Firefox, Chrome, Opera, Safari			better test?
 	    anElement.setAttribute("class", newClass) ;
 			
