@@ -454,7 +454,7 @@ function TCPremoveCSStransition(fromPage) {
 // !user functions
 //
 
-function TCPcanScrollRight() {
+function TCPpageExistsRight() {
 
 	if (TCPcurrentPage < (TCPpages.length - 1) )
 		return true ;
@@ -463,7 +463,7 @@ function TCPcanScrollRight() {
 }
 
 
-function TCPcanScrollleft() {
+function TCPpageExistsLeft() {
 
 	if (TCPcurrentPage > 1  )
 		return true ;
@@ -534,7 +534,7 @@ function TCP_addAttribute (anElement, attribute, attributeValue) {
 
 
 
-	function noMove (event) {
+function noMove (event) {
 	
-		event.preventDefault() ;
-	}
+	event.preventDefault() ;
+}
