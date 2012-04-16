@@ -37,5 +37,5 @@ returns current page number.  Note pages start at page 1.  (Just as there is no 
 returns total number of pages in the scroll.
 
 ##Author##
-Peter Galloway, from [Nomadech](http://nomadech.com).  [Twitter](http://twitter.com/#!/pfgalloway)
+Peter Galloway, from [Nomadech](http://nomadech.com).  And on twitter [here](http://twitter.com/#!/pfgalloway)
 
