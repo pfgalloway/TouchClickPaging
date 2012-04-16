@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="TouchClickPaging : Javascript applet to provide a paging method that responds to both mouse and touch interfaces." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>TouchClickPaging</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/pfgalloway/TouchClickPaging">Fork Me on GitHub</a>
+
+          <h1 id="project_title">TouchClickPaging</h1>
+          <h2 id="project_tagline">Javascript applet to provide a paging method that responds to both mouse and touch interfaces.</h2>
+
+          <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/pfgalloway/TouchClickPaging/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/pfgalloway/TouchClickPaging/tarball/master">Download this project as a tar.gz file</a>
+          </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Touch/Click Paging</h1>
+
+<p>A paging applet for HTML/Javascript using CSS3 attributes for on-screen animations.</p>
+
+<p>This is from a project a wrote that didn't get released but I was happy with how this part turned out.</p>
+
+<h2>Configuring</h2>
+
+<p>Probably easiest to view the sample HTML file but</p>
+
+<ol>
+<li><p>You identify the containing DIV with id="TCPpages"</p></li>
+<li><p>All pages within the containing DIV that you want TCP to control <em>must</em> have an attribute "data-TCPpageNum=x" where 'x' is the page number.  I don't currently check for duplicate page numbers.</p></li>
+<li><p>Within the page div, you can also have an <em>optional</em> attribute "data-TCPtitle=pageTitle" and that page title will be picked up and used as hover text for the page indicators</p></li>
+<li><p>Somewhere on your page you <em>must</em> have a DIV with ID "TCPindicators".  The page indicator 'dots' will be place here.</p></li>
+<li><p>the TCPindicators DIV can have an <em>optional</em> attribute "data-TCPstart=x" where 'x' is the first page to display.</p></li>
+<li><p>you <em>must</em> call TCPinitialisation() at some point, eg body onload</p></li>
+</ol><h2>Functions</h2>
+
+<p>Note: You don't need to call these functions for Touch/Click Paging to work, they are there should you wish to augment.</p>
+
+<h3>TCPcanScrollRight()</h3>
+
+<p>returns FALSE if there are no more pages that can scroll in from the right.  Else TRUE</p>
+
+<h3>TCPcanScrollleft()</h3>
+
+<p>returns FALSE if there are no more pages that can scroll in from the left.  Else TRUE</p>
+
+<h3>TCPcurrentPage()</h3>
+
+<p>returns current page number.  Note pages start at page 1.  (Just as there is no spoon, there is no page 0)</p>
+
+<h3>TCPnumberOfPages()</h3>
+
+<p>returns total number of pages in the scroll.</p>
+
+<h2>Author</h2>
+
+<p>Peter Galloway, from <a href="http://nomadech.com">Nomadech</a>.  And on twitter <a href="http://twitter.com/#!/pfgalloway">here</a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">TouchClickPaging maintained by <a href="https://github.com/pfgalloway">pfgalloway</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
