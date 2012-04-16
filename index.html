@@ -1,88 +1,65 @@
 <!DOCTYPE html>
-<html>
+<head>
+	<title>TouchClickPaging Sample</title>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="TouchClickPaging : Javascript applet to provide a paging method that responds to both mouse and touch interfaces." />
+	<link rel="stylesheet" href="TouchClickPaging_sample.css">
+	<script type='text/javascript' src="TouchClickPaging.js"></script>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+	<meta name="viewport" content="width=device-width, height=480, initial-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <title>TouchClickPaging</title>
-  </head>
+</head>
 
-  <body>
+<!-- you must call TCPinitialisation on page load, either here or as part of own initialisation routine -->
+<body onload="TCPinitialisation()" ontouchmove="noMove(event)">
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/pfgalloway/TouchClickPaging">Fork Me on GitHub</a>
+<div id="fullScreen" class="glowNoise">
 
-          <h1 id="project_title">TouchClickPaging</h1>
-          <h2 id="project_tagline">Javascript applet to provide a paging method that responds to both mouse and touch interfaces.</h2>
+<span class="ghostText">The main body</span>
 
-          <section id="downloads">
-            <a class="zip_download_link" href="https://github.com/pfgalloway/TouchClickPaging/zipball/master">Download this project as a .zip file</a>
-            <a class="tar_download_link" href="https://github.com/pfgalloway/TouchClickPaging/tarball/master">Download this project as a tar.gz file</a>
-          </section>
-        </header>
-    </div>
+	<!-- the enclosing div **must** have id="TCPpages", you can apply CSS to that ID or use your own class -->
+	<!-- also note that TCP uses 'style=' dynamically.  Don't use this attribute, it will get overwritten -->
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>Touch/Click Paging</h1>
 
-<p>A paging applet for HTML/Javascript using CSS3 attributes for on-screen animations.</p>
+	<div 	id				= "TCPpages" 
+			class			= "scrollView" >
 
-<p>This is from a project a wrote that didn't get released but I was happy with how this part turned out.</p>
+		<span class="ghostText">This is the wallpaper</span>
 
-<h2>Configuring</h2>
+		<!-- any 'pages' must have attribute data-TCPpageNumer="x" -->
+		<!-- any style position attributes (position, top, bottom, left, right, height, width) will be overwritten -->
+		<!-- don't use style attribute within div either -->
 
-<p>Probably easiest to view the sample HTML file but</p>
+		<div 	data-TCPpageNum	= "1" data-TCPtitle="Page 1"
+				class	= "demoPage colourRed texturePaper"
+				>
+		<span class="ghostText">Page 1</span>
+		</div>
 
-<ol>
-<li><p>You identify the containing DIV with id="TCPpages"</p></li>
-<li><p>All pages within the containing DIV that you want TCP to control <em>must</em> have an attribute "data-TCPpageNum=x" where 'x' is the page number.  I don't currently check for duplicate page numbers.</p></li>
-<li><p>Within the page div, you can also have an <em>optional</em> attribute "data-TCPtitle=pageTitle" and that page title will be picked up and used as hover text for the page indicators</p></li>
-<li><p>Somewhere on your page you <em>must</em> have a DIV with ID "TCPindicators".  The page indicator 'dots' will be place here.</p></li>
-<li><p>the TCPindicators DIV can have an <em>optional</em> attribute "data-TCPstart=x" where 'x' is the first page to display.</p></li>
-<li><p>you <em>must</em> call TCPinitialisation() at some point, eg body onload</p></li>
-</ol><h2>Functions</h2>
+		<div 	data-TCPpageNum	= "2" data-TCPtitle="Page 2"
+				class	= "demoPage colourGreen texturePaper"
+				>
+		<span class="ghostText">Page 2</span>
+		</div>
 
-<p>Note: You don't need to call these functions for Touch/Click Paging to work, they are there should you wish to augment.</p>
+		<div 	data-TCPpageNum	= "3" data-TCPtitle="Page 3"
+				class	= "demoPage colourBlue texturePaper"
+				>
+		<span class="ghostText">Page 3</span>
+		</div>
 
-<h3>TCPcanScrollRight()</h3>
+		<div 	data-TCPpageNum	= "4" data-TCPtitle="Page 4"
+				class	= "demoPage colourYellow texturePaper"
+				>
+		<span class="ghostText">Page 4</span>
+		</div>
+	</div>
 
-<p>returns FALSE if there are no more pages that can scroll in from the right.  Else TRUE</p>
-
-<h3>TCPcanScrollleft()</h3>
-
-<p>returns FALSE if there are no more pages that can scroll in from the left.  Else TRUE</p>
-
-<h3>TCPcurrentPage()</h3>
-
-<p>returns current page number.  Note pages start at page 1.  (Just as there is no spoon, there is no page 0)</p>
-
-<h3>TCPnumberOfPages()</h3>
-
-<p>returns total number of pages in the scroll.</p>
-
-<h2>Author</h2>
-
-<p>Peter Galloway, from <a href="http://nomadech.com">Nomadech</a>.  And on twitter <a href="http://twitter.com/#!/pfgalloway">here</a></p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">TouchClickPaging maintained by <a href="https://github.com/pfgalloway">pfgalloway</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
-</html>
+	<div style="position: absolute; display: block; bottom: 5px; left: 0px; right: 0px; width: 100%; text-align: center">
+	<!-- data-TCPstart 		= starting page; if ommitted, default is 1 -->
+	<div 	id				= "TCPindicators"
+			data-TCPstart	= "3"></div>
+	</div>
+</div>
+</body>
