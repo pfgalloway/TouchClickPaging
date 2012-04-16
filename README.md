@@ -4,9 +4,22 @@ A paging applet for HTML/Javascript using CSS3 attributes for on-screen animatio
 
 This is from a project a wrote that didn't get released but I was happy with how this part turned out.
 
-##How it works##
 
 ##Configuring###
+Probably easiest to view the sample HTML file but
+
+1. You identify the containing DIV with id="TCPpages"
+
+2. All pages within the containing DIV that you want TCP to control *must* have an attribute "data-TCPpageNum=x" where 'x' is the page number.  I don't currently check for duplicate page numbers.
+
+3. Within the page div, you can also have an *optional* attribute "data-TCPtitle=pageTitle" and that page title will be picked up and used as hover text for the page indicators
+
+4. Somewhere on your page you *must* have a DIV with ID "TCPindicators".  The page indicator 'dots' will be place here.
+
+5. the TCPindicators DIV can have an *optional* attribute "data-TCPstart=x" where 'x' is the first page to display.
+
+6. you *must* call TCPinitialisation() at some point, eg body onload
+
 
 ##Functions###
 Note: You don't need to call these functions for Touch/Click Paging to work, they are there should you wish to augment.
@@ -23,7 +36,6 @@ returns current page number.  Note pages start at page 1.  (Just as there is no 
 ###TCPnumberOfPages()###
 returns total number of pages in the scroll.
 
+##Author##
+Peter Galloway, from [Nomadech](http://nomadech.com).  [Twitter](http://twitter.com/#!/pfgalloway)
 
-##to do##
-- put hover text on indicator
-- mark selected page indicator differently
